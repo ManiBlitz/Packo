@@ -17,11 +17,23 @@ public class MySQLConnUtils {
     private static final String USERNAME = "packoser_admin";
     private static final String PASSWORD = "User426750!";
     
+    // static variables used in local development
+    // Thoses variables must be modified in the ConnectionResources.java
+    // THE COMMITS SHOULD NOT INCLUDE THE ConnectionResources.java FILE!
+    public static final String HOSTNAME_LOCAL = ConnectionResources.SELF_HOST;
+    private static final String DBNAME_LOCAL = ConnectionResources.SELF_DB;
+    private static final String USERNAME_LOCAL = ConnectionResources.SELF_USERNAME;
+    private static final String PASSWORD_LOCAL = ConnectionResources.SELF_PASSWORD;
+    
  public static Connection getMySQLConnection()
          throws ClassNotFoundException, SQLException {
      // Note: Change the connection parameters accordingly.
-     
-     return getMySQLConnection(HOSTNAME, DBNAME, USERNAME, PASSWORD);
+     try{
+        return getMySQLConnection(HOSTNAME, DBNAME, USERNAME, PASSWORD);
+     }catch(Exception e){
+        System.out.println("Switching to local development basis");
+        return getMySQLConnection(HOSTNAME_LOCAL, DBNAME_LOCAL, USERNAME_LOCAL, PASSWORD_LOCAL);
+     }
  }
   
  public static Connection getMySQLConnection(String hostName, String dbName,
